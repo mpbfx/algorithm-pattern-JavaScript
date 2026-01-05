@@ -52,24 +52,30 @@
 
 ## 三、 数组与双指针 (Array & Two Pointers)
 
-**N数之和**
-- [1. 两数之和](https://leetcode-cn.com/problems/two-sum/) (Easy) - *Hash*
+**基础双指针 (Two Pointers Basics)**
+- [167. 两数之和 II](https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/) (Easy) - *左右指针*
 - [15. 三数之和](https://leetcode-cn.com/problems/3sum/) (Medium) - *排序+双指针*
+- [42. 接雨水](https://leetcode-cn.com/problems/trapping-rain-water/) (Hard) - *必考*
 
-**滑动窗口**
+**滑动窗口 (Sliding Window)**
 - [3. 无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/) (Medium) - *模版题*
 - [209. 长度最小的子数组](https://leetcode-cn.com/problems/minimum-size-subarray-sum/) (Medium)
 - [76. 最小覆盖子串](https://leetcode-cn.com/problems/minimum-window-substring/) (Hard)
 - [239. 滑动窗口最大值](https://leetcode-cn.com/problems/sliding-window-maximum/) (Hard) - *单调队列*
 
-**经典双指针/模拟**
-- [42. 接雨水](https://leetcode-cn.com/problems/trapping-rain-water/) (Hard) - *必考*
+**贪心策略 (Greedy Strategy)**
 - [121. 买卖股票的最佳时机](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/) (Easy)
 - [122. 买卖股票的最佳时机 II](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/) (Easy)
+
+**逆向与排列双指针 (Reverse & Permutation)**
 - [88. 合并两个有序数组](https://leetcode-cn.com/problems/merge-sorted-array/) (Easy) - *逆向指针*
-- [31. 下一个排列](https://leetcode-cn.com/problems/next-permutation/) (Medium)
+- [31. 下一个排列](https://leetcode-cn.com/problems/next-permutation/) (Medium) - *找逆序对+反转*
+
+**二维矩阵模拟 (Matrix Simulation)**
 - [54. 螺旋矩阵](https://leetcode-cn.com/problems/spiral-matrix/) (Medium)
 - [48. 旋转图像](https://leetcode-cn.com/problems/rotate-image/) (Medium)
+
+**区间与原地哈希 (Intervals & Cyclic Sort)**
 - [56. 合并区间](https://leetcode-cn.com/problems/merge-intervals/) (Medium)
 - [41. 缺失的第一个正数](https://leetcode-cn.com/problems/first-missing-positive/) (Hard) - *原地Hash*
 
