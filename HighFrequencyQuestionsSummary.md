@@ -52,11 +52,12 @@
 
 ## 三、 数组与双指针 (Array & Two Pointers)
 
-**N数之和**
-- [1. 两数之和](https://leetcode-cn.com/problems/two-sum/) (Easy) - *Hash*
+**基础双指针 (Two Pointers Basics)**
+- [167. 两数之和 II](https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/) (Easy) - *左右指针*
 - [15. 三数之和](https://leetcode-cn.com/problems/3sum/) (Medium) - *排序+双指针*
+- [42. 接雨水](https://leetcode-cn.com/problems/trapping-rain-water/) (Hard) - *必考*
 
-**滑动窗口**
+**滑动窗口 (Sliding Window)**
 - [3. 无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/) (Medium) - *模版题*
 - [209. 长度最小的子数组](https://leetcode-cn.com/problems/minimum-size-subarray-sum/) (Medium)
 - [76. 最小覆盖子串](https://leetcode-cn.com/problems/minimum-window-substring/) (Hard)
