@@ -102,12 +102,12 @@
 
 ```javascript
 // 通用模板
-const dp = new Array(n).fill(初始值);
-dp[0] = 边界值;
+const dp = new Array(n).fill(初始值); // 1. 状态定义：dp[i]
+dp[0] = 边界值;                      // 2. 初始化
 for (let i = 1; i < n; i++) {
-    dp[i] = 状态转移(dp[i-1], dp[i-2], ...);  // 或遍历 j < i
+    dp[i] = 状态转移(dp[i-1], dp[i-2], ...);  // 3. 转移方程
 }
-return dp[n-1]; // 或 Math.max(...dp)
+return dp[n-1]; // 4. 返回值 (或 Math.max(...dp))
 ```
 
 | 题目                                                                                    | 状态定义                    | 转移方程                                                   |
@@ -116,6 +116,68 @@ return dp[n-1]; // 或 Math.max(...dp)
 | [53. 最大子数组和](https://leetcode-cn.com/problems/maximum-subarray/)                  | `dp[i]` = 以i结尾的最大和   | `dp[i] = max(dp[i-1] + nums[i], nums[i])`                  |
 | [300. 最长上升子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/) | `dp[i]` = 以i结尾的LIS长度  | `dp[i] = max(dp[j] + 1)` 其中 `j < i && nums[j] < nums[i]` |
 | [139. 单词拆分](https://leetcode-cn.com/problems/word-break/)                           | `dp[i]` = 前i个字符能否拆分 | `dp[i] = dp[j] && s[j:i] in dict`                          |
+
+<details>
+<summary><b>代码实现 (点击展开)</b></summary>
+
+```javascript
+// 70. 爬楼梯
+var climbStairs = function(n) {
+    if (n <= 1) return 1;
+    const dp = new Array(n + 1).fill(0); // 状态：dp[i] 到第i阶的方法数
+    dp[0] = 1; dp[1] = 1;               // 初始化
+    for (let i = 2; i <= n; i++) {
+        dp[i] = dp[i - 1] + dp[i - 2];   // 方程：前两阶方法数之和
+    }
+    return dp[n];                        // 答案
+};
+
+// 53. 最大子数组和
+var maxSubArray = function(nums) {
+    const n = nums.length;
+    const dp = new Array(n).fill(0);     // 状态：以i结尾的最大子数组和
+    dp[0] = nums[0];                     // 初始化
+    for (let i = 1; i < n; i++) {
+        // 方程：要么接在前面后面，要么自立门户
+        dp[i] = Math.max(dp[i - 1] + nums[i], nums[i]);
+    }
+    return Math.max(...dp);              // 答案：所有结尾情况中的最大值
+};
+
+// 300. 最长上升子序列
+var lengthOfLIS = function(nums) {
+    const n = nums.length;
+    if (n === 0) return 0;
+    const dp = new Array(n).fill(1);     // 状态：以i结尾的LIS长度，初始化为1
+    for (let i = 1; i < n; i++) {
+        for (let j = 0; j < i; j++) {
+            // 方程：如果 nums[i] 比前面的大，尝试接在后面
+            if (nums[j] < nums[i]) dp[i] = Math.max(dp[i], dp[j] + 1);
+        }
+    }
+    return Math.max(...dp);              // 答案
+};
+
+// 139. 单词拆分
+var wordBreak = function(s, wordDict) {
+    const n = s.length;
+    const wordSet = new Set(wordDict);
+    const dp = new Array(n + 1).fill(false); // 状态：前i个字符能否拆分
+    dp[0] = true;                            // 初始化：空字符串为true
+    for (let i = 1; i <= n; i++) {
+        for (let j = 0; j < i; j++) {
+            // 方程：如果前j个能拆分，且剩余部分在字典中
+            if (dp[j] && wordSet.has(s.substring(j, i))) {
+                dp[i] = true;
+                break;
+            }
+        }
+    }
+    return dp[n];                            // 答案
+};
+```
+</details>
+
 
 ---
 
@@ -126,21 +188,43 @@ return dp[n-1]; // 或 Math.max(...dp)
 
 ```javascript
 // 完全背包模板
-const dp = new Array(amount + 1).fill(Infinity);
-dp[0] = 0;
-for (let i = 1; i <= amount; i++) {
-    for (const coin of coins) {
+const dp = new Array(amount + 1).fill(Infinity); // 1. 状态：凑成金额i的最优解
+dp[0] = 0;                                       // 2. 初始化
+for (let i = 1; i <= amount; i++) {              // 遍历容量
+    for (const coin of coins) {                  // 遍历选择
         if (i >= coin) {
-            dp[i] = Math.min(dp[i], dp[i - coin] + 1);
+            dp[i] = Math.min(dp[i], dp[i - coin] + 1); // 3. 转移方程
         }
     }
 }
-return dp[amount] > amount ? -1 : dp[amount];
+return dp[amount] > amount ? -1 : dp[amount];    // 4. 返回值
 ```
 
 | 题目                                                           | 状态定义                    | 转移方程                        |
 | -------------------------------------------------------------- | --------------------------- | ------------------------------- |
 | [322. 零钱兑换](https://leetcode-cn.com/problems/coin-change/) | `dp[i]` = 凑成i的最少硬币数 | `dp[i] = min(dp[i - coin] + 1)` |
+
+<details>
+<summary><b>代码实现 (点击展开)</b></summary>
+
+```javascript
+// 322. 零钱兑换
+var coinChange = function(coins, amount) {
+    const dp = new Array(amount + 1).fill(Infinity); // 状态：凑成金额i的最少硬币数
+    dp[0] = 0;                                       // 初始化
+    for (let i = 1; i <= amount; i++) {
+        for (const coin of coins) {
+            if (i >= coin) {
+                // 方程：取当前硬币，则需凑齐 i-coin 的金额
+                dp[i] = Math.min(dp[i], dp[i - coin] + 1);
+            }
+        }
+    }
+    return dp[amount] === Infinity ? -1 : dp[amount]; // 答案
+};
+```
+</details>
+
 
 ---
 
@@ -151,24 +235,66 @@ return dp[amount] > amount ? -1 : dp[amount];
 
 ```javascript
 // 双序列DP模板
-const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
-// 初始化边界 dp[0][j] 和 dp[i][0]
+const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0)); // 1. 状态
+// 2. 初始化边界 dp[0][j] 和 dp[i][0]
 for (let i = 1; i <= m; i++) {
     for (let j = 1; j <= n; j++) {
         if (s1[i-1] === s2[j-1]) {
-            dp[i][j] = dp[i-1][j-1] + 1;  // 匹配
+            dp[i][j] = dp[i-1][j-1] + 1;  // 3. 转移方程：匹配
         } else {
-            dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);  // 不匹配
+            dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);  // 3. 转移方程：不匹配
         }
     }
 }
-return dp[m][n];
+return dp[m][n]; // 4. 答案
 ```
 
 | 题目                                                                                 | 状态定义                | 转移方程                                                    |
 | ------------------------------------------------------------------------------------ | ----------------------- | ----------------------------------------------------------- |
 | [1143. 最长公共子序列](https://leetcode-cn.com/problems/longest-common-subsequence/) | `dp[i][j]` = LCS长度    | 相等：`dp[i-1][j-1]+1`；不等：`max(dp[i-1][j], dp[i][j-1])` |
 | [72. 编辑距离](https://leetcode-cn.com/problems/edit-distance/)                      | `dp[i][j]` = 最少操作数 | 相等：`dp[i-1][j-1]`；不等：`min(三方向) + 1`               |
+
+<details>
+<summary><b>代码实现 (点击展开)</b></summary>
+
+```javascript
+// 1143. 最长公共子序列
+var longestCommonSubsequence = function(text1, text2) {
+    const m = text1.length, n = text2.length;
+    const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0)); // 状态：t1前i和t2前j的LCS
+    for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+            if (text1[i - 1] === text2[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1] + 1; // 方程：字符相等，长度+1
+            } else {
+                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]); // 方程：不等，取左或上的最大值
+            }
+        }
+    }
+    return dp[m][n]; // 答案
+};
+
+// 72. 编辑距离
+var minDistance = function(word1, word2) {
+    const m = word1.length, n = word2.length;
+    const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0)); // 状态：w1前i转为w2前j的最小步数
+    for (let i = 0; i <= m; i++) dp[i][0] = i; // 初始化：w1变为空需删除i次
+    for (let j = 0; j <= n; j++) dp[0][j] = j; // 初始化：空变w2需插入j次
+    for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+            if (word1[i - 1] === word2[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1]; // 方程：相等，无需操作
+            } else {
+                // 方程：不等，取 替换、删除、插入 三者最小值 + 1
+                dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1;
+            }
+        }
+    }
+    return dp[m][n]; // 答案
+};
+```
+</details>
+
 
 ---
 
@@ -181,14 +307,16 @@ return dp[m][n];
 // 矩阵DP模板 (路径问题)
 for (let i = 0; i < m; i++) {
     for (let j = 0; j < n; j++) {
+        // 状态转移：通常依赖上方和左方
         dp[i][j] = Math.min(dp[i-1][j], dp[i][j-1]) + grid[i][j];
     }
 }
 
 // 区间DP模板 (回文/分割问题)
-for (let len = 2; len <= n; len++) {       // 枚举区间长度
-    for (let i = 0; i + len - 1 < n; i++) { // 枚举左端点
-        let j = i + len - 1;                 // 右端点
+for (let len = 2; len <= n; len++) {       // 1. 枚举区间长度
+    for (let i = 0; i + len - 1 < n; i++) { // 2. 枚举左端点
+        let j = i + len - 1;                 // 3. 计算右端点
+        // 4. 状态转移：根据子区间 [i+1, j-1] 等计算
         dp[i][j] = 根据 dp[i+1][j-1] 等子区间计算;
     }
 }
@@ -199,6 +327,74 @@ for (let len = 2; len <= n; len++) {       // 枚举区间长度
 | [64. 最小路径和](https://leetcode-cn.com/problems/minimum-path-sum/)               | `dp[i][j]` = 到(i,j)的最小和           | `dp[i][j] = min(上, 左) + grid[i][j]`   |
 | [221. 最大正方形](https://leetcode-cn.com/problems/maximal-square/)                | `dp[i][j]` = 以(i,j)为右下角的最大边长 | `dp[i][j] = min(左,上,左上) + 1`        |
 | [5. 最长回文子串](https://leetcode-cn.com/problems/longest-palindromic-substring/) | `dp[i][j]` = s[i..j]是否回文           | `dp[i][j] = s[i]==s[j] && dp[i+1][j-1]` |
+
+<details>
+<summary><b>代码实现 (点击展开)</b></summary>
+
+```javascript
+// 64. 最小路径和
+var minPathSum = function(grid) {
+    const m = grid.length, n = grid[0].length;
+    const dp = Array.from({ length: m }, () => new Array(n).fill(0)); // 状态：到(i,j)的最小路径和
+    dp[0][0] = grid[0][0];                                            // 初始化起点
+    for (let i = 1; i < m; i++) dp[i][0] = dp[i - 1][0] + grid[i][0]; // 初始化第一列
+    for (let j = 1; j < n; j++) dp[0][j] = dp[0][j - 1] + grid[0][j]; // 初始化第一行
+    for (let i = 1; i < m; i++) {
+        for (let j = 1; j < n; j++) {
+            // 方程：只能从左边或上边过来
+            dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];
+        }
+    }
+    return dp[m - 1][n - 1]; // 答案
+};
+
+// 221. 最大正方形
+var maximalSquare = function(matrix) {
+    if (!matrix.length) return 0;
+    const m = matrix.length, n = matrix[0].length;
+    const dp = Array.from({ length: m }, () => new Array(n).fill(0)); // 状态：以(i,j)为右下角的最大正方形边长
+    let maxSide = 0;
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            if (matrix[i][j] === '1') {
+                if (i === 0 || j === 0) dp[i][j] = 1; // 边界初始化
+                else {
+                    // 方程：受限于左、上、左上三个方向的最小值
+                    dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1;
+                }
+                maxSide = Math.max(maxSide, dp[i][j]);
+            }
+        }
+    }
+    return maxSide * maxSide; // 答案：面积 = 边长平方
+};
+
+// 5. 最长回文子串
+var longestPalindrome = function(s) {
+    const n = s.length;
+    if (n < 2) return s;
+    const dp = Array.from({ length: n }, () => new Array(n).fill(false)); // 状态：s[i..j]是否为回文
+    for (let i = 0; i < n; i++) dp[i][i] = true;                          // 初始化：单个字符必回文
+    let start = 0, maxLen = 1;
+    for (let len = 2; len <= n; len++) {       // 枚举长度
+        for (let i = 0; i <= n - len; i++) {   // 枚举左端点
+            let j = i + len - 1;               // 计算右端点
+            if (s[i] === s[j]) {
+                // 方程：首尾相等且内部是回文（或内部为空/单字符）
+                if (len <= 3) dp[i][j] = true;
+                else dp[i][j] = dp[i + 1][j - 1];
+            }
+            if (dp[i][j] && len > maxLen) {
+                maxLen = len;
+                start = i;
+            }
+        }
+    }
+    return s.substring(start, start + maxLen); // 答案
+};
+```
+</details>
+
 
 ---
 
@@ -215,18 +411,18 @@ const result = [];
 function backtrack(path, choices, start) {
     // 1. 满足结束条件，收集结果
     if (满足结束条件) {
-        result.push([...path]);  // 注意拷贝
+        result.push([...path]);  // 注意拷贝，避免引用问题
         return;
     }
     
     // 2. 遍历选择列表
     for (let i = start; i < choices.length; i++) {
-        // 剪枝（可选）
+        // 剪枝（可选）：排除不合法的选择
         if (需要剪枝) continue;
         
-        path.push(choices[i]);       // 做选择
-        backtrack(path, choices, 下一个起点);  // 递归
-        path.pop();                  // 撤销选择
+        path.push(choices[i]);       // 做选择：将选择加入路径
+        backtrack(path, choices, 下一个起点);  // 递归：进入下一层决策树
+        path.pop();                  // 撤销选择：回溯，恢复状态
     }
 }
 ```
@@ -250,6 +446,134 @@ function backtrack(path, choices, start) {
 | [22. 括号生成](https://leetcode-cn.com/problems/generate-parentheses/)   | 决策树   | `left < n` 可加左括号，`right < left` 可加右括号 |
 | [79. 单词搜索](https://leetcode-cn.com/problems/word-search/)            | 网格回溯 | 四方向 DFS + 原地标记访问                        |
 
+<details>
+<summary><b>代码实现 (点击展开)</b></summary>
+
+```javascript
+// 46. 全排列
+var permute = function(nums) {
+    const res = [];
+    const used = new Array(nums.length).fill(false);
+    const backtrack = (path) => {
+        if (path.length === nums.length) {
+            res.push([...path]); // 满足结束条件
+            return;
+        }
+        for (let i = 0; i < nums.length; i++) {
+            if (used[i]) continue; // 剪枝：已使用的元素跳过
+            used[i] = true;
+            path.push(nums[i]);    // 做选择
+            backtrack(path);       // 递归
+            path.pop();            // 撤销选择
+            used[i] = false;
+        }
+    };
+    backtrack([]);
+    return res;
+};
+
+// 78. 子集
+var subsets = function(nums) {
+    const res = [];
+    const backtrack = (path, start) => {
+        res.push([...path]); // 每个节点都是一个子集
+        for (let i = start; i < nums.length; i++) {
+            path.push(nums[i]);    // 做选择
+            backtrack(path, i + 1); // 递归：传入 i+1 保证不重复选
+            path.pop();            // 撤销选择
+        }
+    };
+    backtrack([], 0);
+    return res;
+};
+
+// 39. 组合总和
+var combinationSum = function(candidates, target) {
+    const res = [];
+    const backtrack = (path, start, sum) => {
+        if (sum === target) {
+            res.push([...path]); // 满足结束条件
+            return;
+        }
+        if (sum > target) return; // 剪枝
+        for (let i = start; i < candidates.length; i++) {
+            path.push(candidates[i]);
+            // 递归：传入 i 而不是 i+1，表示元素可以重复选取
+            backtrack(path, i, sum + candidates[i]);
+            path.pop();
+        }
+    };
+    backtrack([], 0, 0);
+    return res;
+};
+
+// 93. 复原 IP 地址
+var restoreIpAddresses = function(s) {
+    const res = [];
+    const backtrack = (path, start) => {
+        if (path.length === 4) {
+            if (start === s.length) res.push(path.join('.'));
+            return;
+        }
+        for (let len = 1; len <= 3; len++) {
+            if (start + len > s.length) break;
+            const segment = s.substring(start, start + len);
+            // 剪枝：不能有前导零，且值不能大于 255
+            if (len > 1 && segment[0] === '0') break;
+            if (len === 3 && parseInt(segment) > 255) break;
+            
+            path.push(segment);
+            backtrack(path, start + len);
+            path.pop();
+        }
+    };
+    backtrack([], 0);
+    return res;
+};
+
+// 22. 括号生成
+var generateParenthesis = function(n) {
+    const res = [];
+    const backtrack = (path, left, right) => {
+        if (path.length === 2 * n) {
+            res.push(path);
+            return;
+        }
+        // 剪枝：左括号随时加（只要不满n），右括号必须少于左括号时加
+        if (left < n) backtrack(path + '(', left + 1, right);
+        if (right < left) backtrack(path + ')', left, right + 1);
+    };
+    backtrack('', 0, 0);
+    return res;
+};
+
+// 79. 单词搜索
+var exist = function(board, word) {
+    const m = board.length, n = board[0].length;
+    const backtrack = (i, j, k) => {
+        if (k === word.length) return true; // 找到单词
+        if (i < 0 || i >= m || j < 0 || j >= n || board[i][j] !== word[k]) return false;
+        
+        const temp = board[i][j];
+        board[i][j] = '#'; // 标记已访问，防止回头
+        const found = backtrack(i + 1, j, k + 1) || 
+                      backtrack(i - 1, j, k + 1) || 
+                      backtrack(i, j + 1, k + 1) || 
+                      backtrack(i, j - 1, k + 1);
+        board[i][j] = temp; // 回溯：恢复网格状态
+        return found;
+    };
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            if (backtrack(i, j, 0)) return true;
+        }
+    }
+    return false;
+};
+```
+</details>
+
+
 ---
 
 ## 六、 搜索 (DFS/BFS)
@@ -258,23 +582,24 @@ function backtrack(path, choices, start) {
 
 ```javascript
 function dfs(grid, i, j) {
-    // 边界检查 + 访问检查
+    // 1. 边界检查 + 访问检查
     if (i < 0 || i >= m || j < 0 || j >= n) return 0;
     if (grid[i][j] !== '1') return 0;
     
-    grid[i][j] = '0';  // 标记已访问（原地修改 / 或用visited数组）
+    // 2. 标记已访问（原地修改，避免重复访问）
+    grid[i][j] = '0';  
     
-    // 四方向递归
+    // 3. 四方向递归：上下左右
     return 1 + dfs(grid, i+1, j) + dfs(grid, i-1, j) 
              + dfs(grid, i, j+1) + dfs(grid, i, j-1);
 }
 
-// 主函数：遍历每个格子
+// 主函数：遍历每个格子，寻找入口
 for (let i = 0; i < m; i++) {
     for (let j = 0; j < n; j++) {
         if (grid[i][j] === '1') {
-            count++;        // 岛屿数量
-            dfs(grid, i, j);
+            count++;        // 发现新岛屿
+            dfs(grid, i, j); // 沉没整个岛屿
         }
     }
 }
@@ -284,15 +609,16 @@ for (let i = 0; i < m; i++) {
 
 ```javascript
 function bfs(grid, startI, startJ) {
-    const queue = [[startI, startJ]];
+    const queue = [[startI, startJ]]; // 1. 初始化队列
     const dirs = [[1,0], [-1,0], [0,1], [0,-1]];
     
     while (queue.length) {
-        const [i, j] = queue.shift();
+        const [i, j] = queue.shift(); // 2. 弹出队头元素
         for (const [di, dj] of dirs) {
             const ni = i + di, nj = j + dj;
+            // 3. 检查边界与合法性
             if (ni >= 0 && ni < m && nj >= 0 && nj < n && grid[ni][nj] === '1') {
-                grid[ni][nj] = '0';
+                grid[ni][nj] = '0';   // 4. 标记访问并入队
                 queue.push([ni, nj]);
             }
         }
