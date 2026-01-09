@@ -643,6 +643,172 @@ function bfs(grid, startI, startJ) {
 - [162. 寻找峰值](https://leetcode-cn.com/problems/find-peak-element/) (Medium)
 - [4. 寻找两个正序数组的中位数](https://leetcode-cn.com/problems/median-of-two-sorted-arrays/) (Hard)
 
+### 核心模板（推荐使用）
+
+```js
+// 通用二分模板 - 避免边界问题
+function binarySearch(nums, target) {
+    let left = 0, right = nums.length - 1;
+    while (left + 1 < right) {
+        let mid = left + ((right - left) >> 1);
+        if (nums[mid] === target) {
+            return mid;
+        } else if (nums[mid] < target) {
+            left = mid;
+        } else {
+            right = mid;
+        }
+    }
+    // 后处理：检查剩余的两个元素
+    if (nums[left] === target) return left;
+    if (nums[right] === target) return right;
+    return -1;
+}
+```
+
+### 33. 搜索旋转排序数组 (Medium)
+
+**关键思路**：旋转数组一分为二，必有一半是有序的，判断 target 在哪一半。
+
+```js
+var search = function(nums, target) {
+    let left = 0, right = nums.length - 1;
+    
+    while (left + 1 < right) {
+        let mid = left + ((right - left) >> 1);
+        
+        if (nums[mid] === target) return mid;
+        
+        // 判断哪半边有序
+        if (nums[left] < nums[mid]) {
+            // 左半边有序
+            if (nums[left] <= target && target <= nums[mid]) {
+                right = mid;
+            } else {
+                left = mid;
+            }
+        } else {
+            // 右半边有序
+            if (nums[mid] <= target && target <= nums[right]) {
+                left = mid;
+            } else {
+                right = mid;
+            }
+        }
+    }
+    
+    if (nums[left] === target) return left;
+    if (nums[right] === target) return right;
+    return -1;
+};
+```
+
+### 69. x 的平方根 (Easy)
+
+**关键思路**：在 [0, x] 范围内二分查找，找最大的 k 使得 k² ≤ x。
+
+```js
+var mySqrt = function(x) {
+    if (x < 2) return x;
+    
+    let left = 1, right = Math.floor(x / 2);
+    
+    while (left + 1 < right) {
+        let mid = left + ((right - left) >> 1);
+        let square = mid * mid;
+        
+        if (square === x) {
+            return mid;
+        } else if (square < x) {
+            left = mid;
+        } else {
+            right = mid;
+        }
+    }
+    
+    // 取较大值能满足条件的那个
+    if (right * right <= x) return right;
+    return left;
+};
+```
+
+### 162. 寻找峰值 (Medium)
+
+**关键思路**：比较 mid 和 mid+1，往更大的方向走一定能找到峰值。
+
+```js
+var findPeakElement = function(nums) {
+    let left = 0, right = nums.length - 1;
+    
+    while (left + 1 < right) {
+        let mid = left + ((right - left) >> 1);
+        
+        if (nums[mid] > nums[mid + 1]) {
+            // 峰值在左边（包括mid）
+            right = mid;
+        } else {
+            // 峰值在右边
+            left = mid;
+        }
+    }
+    
+    // 返回较大的那个
+    return nums[left] > nums[right] ? left : right;
+};
+```
+
+### 4. 寻找两个正序数组的中位数 (Hard)
+
+**关键思路**：二分查找分割点，使左半部分元素个数 = (m+n+1)/2，且左边最大值 ≤ 右边最小值。
+
+```js
+var findMedianSortedArrays = function(nums1, nums2) {
+    // 确保 nums1 是较短的数组
+    if (nums1.length > nums2.length) {
+        [nums1, nums2] = [nums2, nums1];
+    }
+    
+    const m = nums1.length, n = nums2.length;
+    const halfLen = Math.floor((m + n + 1) / 2);
+    
+    let left = 0, right = m;
+    
+    while (left <= right) {
+        const i = left + ((right - left) >> 1);  // nums1 的分割点
+        const j = halfLen - i;                    // nums2 的分割点
+        
+        const nums1LeftMax = i === 0 ? -Infinity : nums1[i - 1];
+        const nums1RightMin = i === m ? Infinity : nums1[i];
+        const nums2LeftMax = j === 0 ? -Infinity : nums2[j - 1];
+        const nums2RightMin = j === n ? Infinity : nums2[j];
+        
+        if (nums1LeftMax <= nums2RightMin && nums2LeftMax <= nums1RightMin) {
+            // 找到正确分割点
+            if ((m + n) % 2 === 1) {
+                return Math.max(nums1LeftMax, nums2LeftMax);
+            }
+            return (Math.max(nums1LeftMax, nums2LeftMax) + 
+                    Math.min(nums1RightMin, nums2RightMin)) / 2;
+        } else if (nums1LeftMax > nums2RightMin) {
+            right = i - 1;  // nums1 分割点左移
+        } else {
+            left = i + 1;   // nums1 分割点右移
+        }
+    }
+    
+    return 0;
+};
+```
+
+### 总结对比
+
+| 题目 | 难点 | 二分条件 |
+|------|------|----------|
+| 33. 旋转数组 | 判断有序半边 | `nums[left] < nums[mid]` |
+| 69. 平方根 | 边界处理 | `mid * mid` 与 x 比较 |
+| 162. 峰值 | 方向选择 | `nums[mid] > nums[mid+1]` |
+| 4. 中位数 | 双数组分割 | 分割点满足交叉条件 |
+
 ---
 
 ## 八、 栈/字符串/数学/其他
@@ -654,9 +820,263 @@ function bfs(grid, startI, startJ) {
 - [232. 用栈实现队列](https://leetcode-cn.com/problems/implement-queue-using-stacks/) (Easy)
 - [394. 字符串解码](https://leetcode-cn.com/problems/decode-string/) (Medium)
 
+### 栈的通用思路
+
+栈题目没有固定模板，但有通用思路：
+
+| 场景 | 思路 | 栈中存储 |
+|------|------|----------|
+| 匹配问题 | 遇"左"入栈，遇"右"出栈匹配 | 字符 |
+| 计算区间长度 | 存索引而非值 | 索引 |
+| 维护额外信息 | 辅助栈同步维护 | 值 + 辅助信息 |
+| 逆序处理 | 双栈倒腾 | 分离存储 |
+
+### 20. 有效的括号 (Easy)
+
+**思路**：遇到左括号入栈，遇到右括号检查栈顶是否匹配。
+
+```js
+var isValid = function(s) {
+    const stack = [];
+    const map = { ')': '(', ']': '[', '}': '{' };
+    
+    for (const char of s) {
+        if (char === '(' || char === '[' || char === '{') {
+            stack.push(char);
+        } else {
+            if (stack.pop() !== map[char]) return false;
+        }
+    }
+    
+    return stack.length === 0;
+};
+```
+
+### 32. 最长有效括号 (Hard)
+
+**思路**：栈中存索引，栈底保持"最后一个未匹配的右括号索引"作为分隔符。
+
+```js
+var longestValidParentheses = function(s) {
+    let maxLen = 0;
+    const stack = [-1];  // 初始放-1作为分隔符
+    
+    for (let i = 0; i < s.length; i++) {
+        if (s[i] === '(') {
+            stack.push(i);
+        } else {
+            stack.pop();
+            if (stack.length === 0) {
+                stack.push(i);  // 当前右括号作为新的分隔符
+            } else {
+                maxLen = Math.max(maxLen, i - stack[stack.length - 1]);
+            }
+        }
+    }
+    
+    return maxLen;
+};
+```
+
+### 155. 最小栈 (Easy)
+
+**思路**：辅助栈同步记录当前最小值。
+
+```js
+var MinStack = function() {
+    this.stack = [];
+    this.minStack = [Infinity];
+};
+
+MinStack.prototype.push = function(val) {
+    this.stack.push(val);
+    this.minStack.push(Math.min(this.minStack[this.minStack.length - 1], val));
+};
+
+MinStack.prototype.pop = function() {
+    this.stack.pop();
+    this.minStack.pop();
+};
+
+MinStack.prototype.top = function() {
+    return this.stack[this.stack.length - 1];
+};
+
+MinStack.prototype.getMin = function() {
+    return this.minStack[this.minStack.length - 1];
+};
+```
+
+### 232. 用栈实现队列 (Easy)
+
+**思路**：双栈实现，输入栈负责 push，输出栈负责 pop/peek，输出栈空时从输入栈倒入。
+
+```js
+var MyQueue = function() {
+    this.inStack = [];
+    this.outStack = [];
+};
+
+MyQueue.prototype.push = function(x) {
+    this.inStack.push(x);
+};
+
+MyQueue.prototype.pop = function() {
+    if (this.outStack.length === 0) {
+        while (this.inStack.length) {
+            this.outStack.push(this.inStack.pop());
+        }
+    }
+    return this.outStack.pop();
+};
+
+MyQueue.prototype.peek = function() {
+    if (this.outStack.length === 0) {
+        while (this.inStack.length) {
+            this.outStack.push(this.inStack.pop());
+        }
+    }
+    return this.outStack[this.outStack.length - 1];
+};
+
+MyQueue.prototype.empty = function() {
+    return this.inStack.length === 0 && this.outStack.length === 0;
+};
+```
+
+### 394. 字符串解码 (Medium)
+
+**思路**：双栈分别存数字和字符串，遇到 `]` 时弹出拼接。
+
+```js
+var decodeString = function(s) {
+    const numStack = [];
+    const strStack = [];
+    let num = 0;
+    let str = '';
+    
+    for (const char of s) {
+        if (char >= '0' && char <= '9') {
+            num = num * 10 + Number(char);
+        } else if (char === '[') {
+            numStack.push(num);
+            strStack.push(str);
+            num = 0;
+            str = '';
+        } else if (char === ']') {
+            const repeatTimes = numStack.pop();
+            str = strStack.pop() + str.repeat(repeatTimes);
+        } else {
+            str += char;
+        }
+    }
+    
+    return str;
+};
+```
+
 **排序**
 - [215. 数组中的第K个最大元素](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/) (Medium) - *快速选择*
 - [补充题4. 手撕快速排序](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/)
+
+### 快速排序模板
+
+```js
+function quickSort(nums, left = 0, right = nums.length - 1) {
+    if (left < right) {
+        const pivotIndex = partition(nums, left, right);
+        quickSort(nums, left, pivotIndex - 1);
+        quickSort(nums, pivotIndex + 1, right);
+    }
+    return nums;
+}
+
+function partition(nums, left, right) {
+    const pivot = nums[right];  // 选最右为基准
+    let i = left;
+    
+    for (let j = left; j < right; j++) {
+        if (nums[j] < pivot) {
+            [nums[i], nums[j]] = [nums[j], nums[i]];
+            i++;
+        }
+    }
+    [nums[i], nums[right]] = [nums[right], nums[i]];
+    return i;
+}
+```
+
+### 快速选择模板（找第K大/小）
+
+**核心思想**：快排的 partition 每次确定一个元素的最终位置，只递归需要的那一半，时间复杂度 O(n)。
+
+```js
+function quickSelect(nums, left, right, k) {
+    if (left === right) return nums[left];
+    
+    const pivotIndex = partition(nums, left, right);
+    
+    if (pivotIndex === k) {
+        return nums[k];
+    } else if (pivotIndex < k) {
+        return quickSelect(nums, pivotIndex + 1, right, k);
+    } else {
+        return quickSelect(nums, left, pivotIndex - 1, k);
+    }
+}
+```
+
+### 215. 数组中的第K个最大元素 (Medium)
+
+**思路**：第 K 大 = 第 (n-k) 小，用快速选择。
+
+```js
+var findKthLargest = function(nums, k) {
+    const targetIndex = nums.length - k;  // 第K大 = 排序后索引为 n-k
+    return quickSelect(nums, 0, nums.length - 1, targetIndex);
+};
+
+function quickSelect(nums, left, right, k) {
+    if (left === right) return nums[left];
+    
+    const pivotIndex = partition(nums, left, right);
+    
+    if (pivotIndex === k) {
+        return nums[k];
+    } else if (pivotIndex < k) {
+        return quickSelect(nums, pivotIndex + 1, right, k);
+    } else {
+        return quickSelect(nums, left, pivotIndex - 1, k);
+    }
+}
+
+function partition(nums, left, right) {
+    // 随机选择基准，避免最坏情况
+    const randomIndex = left + Math.floor(Math.random() * (right - left + 1));
+    [nums[randomIndex], nums[right]] = [nums[right], nums[randomIndex]];
+    
+    const pivot = nums[right];
+    let i = left;
+    
+    for (let j = left; j < right; j++) {
+        if (nums[j] < pivot) {
+            [nums[i], nums[j]] = [nums[j], nums[i]];
+            i++;
+        }
+    }
+    [nums[i], nums[right]] = [nums[right], nums[i]];
+    return i;
+}
+```
+
+### 排序算法对比
+
+| 算法 | 时间复杂度 | 空间复杂度 | 稳定性 | 适用场景 |
+|------|-----------|-----------|--------|----------|
+| 快速排序 | O(nlogn) 平均 | O(logn) | 不稳定 | 通用排序 |
+| 快速选择 | O(n) 平均 | O(1) | - | 找第K大/小 |
+| 堆排序 | O(nlogn) | O(1) | 不稳定 | TopK问题 |
+| 归并排序 | O(nlogn) | O(n) | 稳定 | 链表排序、求逆序对 |
 
 **字符串/数学**
 - [415. 字符串相加](https://leetcode-cn.com/problems/add-strings/) (Easy)
