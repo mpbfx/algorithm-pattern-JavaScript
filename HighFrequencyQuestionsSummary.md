@@ -4,25 +4,41 @@
 
 **基础操作**
 - [206. 反转链表](https://leetcode-cn.com/problems/reverse-linked-list/) (Easy) - *必背*
+  > 给你单链表的头节点 `head` ，请你反转链表，并返回反转后的链表。
 - [92. 反转链表 II](https://leetcode-cn.com/problems/reverse-linked-list-ii/) (Medium) - *区间反转*
+  > 给你单链表的头节点 `head` 和两个整数 `left` 和 `right` ，请你反转从位置 `left` 到位置 `right` 的链表节点，返回反转后的链表。
 - [25. K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/) (Hard) - *面试常客*
+  > 给你一个链表，每 `k` 个节点一组进行翻转，请你返回翻转后的链表。
 - [21. 合并两个有序链表](https://leetcode-cn.com/problems/merge-two-sorted-lists/) (Easy)
+  > 将两个升序链表合并为一个新的升序链表并返回。
 - [23. 合并K个排序链表](https://leetcode-cn.com/problems/merge-k-sorted-lists/) (Hard) - *堆/归并*
+  > 给你一个链表数组，每个链表都已经按升序排列。请你将所有链表合并到一个升序链表中。
 - [148. 排序链表](https://leetcode-cn.com/problems/sort-list/) (Medium) - *归并排序*
+  > 给你链表的头结点 `head` ，请将其按升序排列并返回排序后的链表（要求 $O(n \log n)$ 时间复杂度和 $O(1)$ 空间复杂度）。
 - [补充题1. 排序奇升偶降链表](https://leetcode-cn.com/problems/sort-list/) (Medium)
+  > 给定一个奇数位升序，偶数位降序的链表，将其排序为升序。 (思路：拆分、反转偶数链表、合并)
 
 **双指针技巧**
 - [141. 环形链表](https://leetcode-cn.com/problems/linked-list-cycle/) (Easy) - *判圈*
+  > 给你一个链表的头节点 `head` ，判断链表中是否有环。
 - [142. 环形链表 II](https://leetcode-cn.com/problems/linked-list-cycle-ii/) (Medium) - *找入口*
+  > 给定一个链表，返回链表开始入环的第一个节点。如果链表无环，则返回 `null`。
 - [160. 相交链表](https://leetcode-cn.com/problems/intersection-of-two-linked-lists/) (Easy)
+  > 给你两个单链表的头节点 `headA` 和 `headB` ，请你找出并返回两个单链表相交的起始节点。
 - [19. 删除链表的倒数第N个节点](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/) (Medium)
+  > 给你一个链表，删除链表的倒数第 `n` 个结点，并且返回链表的头结点。
 - [剑指 Offer 22. 链表中倒数第k个节点](https://leetcode-cn.com/problems/lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof/) (Easy)
+  > 输入一个链表，输出该链表中倒数第 `k` 个节点。
 
 **综合/技巧**
 - [143. 重排链表](https://leetcode-cn.com/problems/reorder-list/) (Medium) - *中点+反转+合并*
+  > 给定一个单链表 $L_0 \to L_1 \to \dots \to L_{n-1} \to L_n$ ，将其重新排列后变为： $L_0 \to L_n \to L_1 \to L_{n-1} \to L_2 \to L_{n-2} \to \dots$
 - [2. 两数相加](https://leetcode-cn.com/problems/add-two-numbers/) (Medium)
+  > 给你两个非空的链表，表示两个非负的整数。它们每位数字都是按照逆序的方式存储的。请你将两个数相加。
 - [146. LRU缓存机制](https://leetcode-cn.com/problems/lru-cache/) (Medium) - *双向链表+哈希*
+  > 设计并实现一个满足 LRU (最近最少使用) 缓存约束的数据结构。
 - [82. 删除排序链表中的重复元素 II](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/) (Medium)
+  > 给定一个已排序的链表的头 `head` ，删除所有含有重复数字的节点，只保留原始链表中未重复出现的数字。
 
 ---
 
@@ -30,23 +46,37 @@
 
 **遍历 (BFS/DFS)**
 - [102. 二叉树的层序遍历](https://leetcode-cn.com/problems/binary-tree-level-order-traversal/) (Medium) - *BFS模板*
+  > 给你二叉树的根节点 `root` ，返回其节点值的层序遍历（即逐层地，从左到右访问所有节点）。
 - [103. 二叉树的锯齿形层次遍历](https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal/) (Medium)
+  > 给你二叉树的根节点 `root` ，返回其节点值的锯齿形层序遍历（先从左往右，下一层再从右往左，以此类推，层与层之间交替进行）。
 - [199. 二叉树的右视图](https://leetcode-cn.com/problems/binary-tree-right-side-view/) (Medium)
+  > 给定一个二叉树的根节点 `root`，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。
 - [662. 二叉树最大宽度](https://leetcode-cn.com/problems/maximum-width-of-binary-tree/) (Medium)
+  > 给定一个二叉树，编写一个函数来获取这个树的最大宽度。每一层的宽度被定义为两个端点之间的长度。
 - [94. 二叉树的中序遍历](https://leetcode-cn.com/problems/binary-tree-inorder-traversal/) (Easy)
+  > 给你二叉树的根节点 `root` ，返回它节点值的中序遍历。
 
 **路径与属性 (分治思维)**
 - [101. 对称二叉树](https://leetcode-cn.com/problems/symmetric-tree/) (Easy)
+  > 给你一个二叉树的根节点 `root` ，检查它是否轴对称。
 - [105. 从前序与中序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/) (Medium)
+  > 给定两个整数数组 `preorder` 和 `inorder` ，请构造二叉树并返回其根节点。
 - [236. 二叉树的最近公共祖先](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/) (Medium) - *必考*
+  > 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
 - [124. 二叉树中的最大路径和](https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/) (Hard)
+  > 二叉树中的最大路径和是指路径上节点值的最大和。路径可以是任何节点作为起点和终点。
 - [112. 路径总和](https://leetcode-cn.com/problems/path-sum/) (Easy)
+  > 给你二叉树的根节点 `root` 和一个表示目标和的整数 `targetSum` 。判断该树中是否存在根节点到叶子节点的路径且和等于目标和。
 - [113. 路径总和 II](https://leetcode-cn.com/problems/path-sum-ii/) (Medium)
+  > 给你二叉树的根节点 `root` 和一个整数 `targetSum` ，找出所有从根节点到叶子节点路径总和等于给定目标和的路径。
 - [129. 求根到叶子节点数字之和](https://leetcode-cn.com/problems/sum-root-to-leaf-numbers/) (Medium)
+  > 计算从根节点到叶子节点生成的所有数字之和。每条路径代表一个数字（如 $1 \to 2 \to 3$ 代表 $123$）。
 - [剑指 Offer 26. 树的子结构](https://leetcode-cn.com/problems/shu-de-zi-jie-gou-lcof/) (Medium)
+  > 输入两棵二叉树A和B，判断B是不是A的子结构。
 
 **二叉搜索树 (BST)**
 - [98. 验证二叉搜索树](https://leetcode-cn.com/problems/validate-binary-search-tree/) (Medium)
+  > 给你一个二叉树的根节点 `root` ，判断其是否是一个有效的二叉搜索树。
 
 ---
 
@@ -54,38 +84,59 @@
 
 **基础双指针 (Two Pointers Basics)**
 - [167. 两数之和 II](https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/) (Easy) - *左右指针*
+  > 给你一个已按 **非递减顺序排列** 的整数数组 `numbers` ，请你从数组中找出两个数满足相加之和等于目标数 `target` 。
 - [15. 三数之和](https://leetcode-cn.com/problems/3sum/) (Medium) - *排序+双指针*
+  > 给你一个包含 `n` 个整数的数组 `nums`，判断 `nums` 中是否存在三个元素 $a, b, c$ ，使得 $a + b + c = 0$ ？找出所有和为 0 且不重复的三元组。
 - [42. 接雨水](https://leetcode-cn.com/problems/trapping-rain-water/) (Hard) - *必考*
+  > 给定 `n` 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨后能接多少雨水。
 
 **滑动窗口 (Sliding Window)**
 - [3. 无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/) (Medium) - *模版题*
+  > 给定一个字符串 `s` ，请你找出其中不含有重复字符的 **最长子串** 的长度。
 - [209. 长度最小的子数组](https://leetcode-cn.com/problems/minimum-size-subarray-sum/) (Medium)
+  > 给定一个含有 `n` 个正整数的数组和一个正整数 `target` 。找出该数组中满足其和 $\ge target$ 的长度最小的 **连续子数组**。
 - [76. 最小覆盖子串](https://leetcode-cn.com/problems/minimum-window-substring/) (Hard)
+  > 给你一个字符串 `s` 、一个字符串 `t` 。返回 `s` 中包含 `t` 所有字符的最小子串。
 - [239. 滑动窗口最大值](https://leetcode-cn.com/problems/sliding-window-maximum/) (Hard) - *单调队列*
+  > 给你一个整数数组 `nums`，有一个大小为 `k` 的滑动窗口从数组的最左侧移动到数组的最右侧。返回滑动窗口中的最大值。
 
 **对撞双指针** *(左右向中间逼近)*
 - [42. 接雨水](https://leetcode-cn.com/problems/trapping-rain-water/) (Hard) - *必考，左右指针+维护最大高度*
+  > (同上，描述见上文)
 - [88. 合并两个有序数组](https://leetcode-cn.com/problems/merge-sorted-array/) (Easy) - *逆向双指针，从后往前填充*
+  > 给你两个按非降序排列的整数数组 `nums1` 和 `nums2`，请你将 `nums2` 合并到 `nums1` 中，使合并后的数组同样按非降序排列。
 - [11. 盛最多水的容器](https://leetcode-cn.com/problems/container-with-most-water/) (Medium) - *移动较短的一边*
+  > 给定一个长度为 `n` 的整数数组 `height` 。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。返回最大水量。
 
 **快慢指针** *(同向不同速)*
 - [26. 删除有序数组中的重复项](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/) (Easy) - *slow记录有效位置*
+  > 给你一个非降序排列的数组 `nums` ，请你 **原地** 删除重复出现的元素，并在数组的每个元素只出现一次的情况下，返回删除后数组的新长度。
 - [27. 移除元素](https://leetcode-cn.com/problems/remove-element/) (Easy) - *原地删除*
+  > 给你一个数组 `nums` 和一个值 `val`，你需要 **原地** 移除所有数值等于 `val` 的元素，并返回移除后数组的新长度。
 - [283. 移动零](https://leetcode-cn.com/problems/move-zeroes/) (Easy) - *非零前移，尾部填零*
+  > 给定一个数组 `nums`，编写一个函数将所有 `0` 移动到数组的末尾，同时保持非零元素的相对顺序。
 - [287. 寻找重复数](https://leetcode-cn.com/problems/find-the-duplicate-number/) (Medium) - *Floyd判圈法*
+  > 给定一个包含 `n + 1` 个整数的数组 `nums` ，其数字都在 `[1, n]` 范围内，可知至少存在一个重复的整数。找出这个重复的数（不修改数组，使用 $O(1)$ 额外空间）。
 
 **贪心策略**
 - [121. 买卖股票的最佳时机](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/) (Easy) - *维护历史最低价*
+  > 给定一个数组 `prices` ，其中 `prices[i]` 表示一支给定股票第 `i` 天的价格。如果你最多只允许完成一笔交易（即买入和卖出一支股票一次），设计一个算法来计算你所能获取的最大利润。
 - [122. 买卖股票的最佳时机 II](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/) (Medium) - *累加所有正收益*
+  > 给你一个整数数组 `prices` ，其中 `prices[i]` 表示某支股票第 `i` 天的价格。在每一天，你可以决定是否购买和/或出售股票。计算你所能获得的最大利润。
 
 **矩阵模拟 (边界控制)**
 - [54. 螺旋矩阵](https://leetcode-cn.com/problems/spiral-matrix/) (Medium) - *四边界收缩*
+  > 给你一个 `m` 行 `n` 列的矩阵 `matrix` ，请按照顺时针螺旋顺序，返回矩阵中的所有元素。
 - [48. 旋转图像](https://leetcode-cn.com/problems/rotate-image/) (Medium) - *先转置后翻转 / 四角轮换*
+  > 给定一个 $n \times n$ 的二维矩阵 `matrix` 表示一个图像。请你将图像顺时针旋转 90 度（原地旋转）。
 - [31. 下一个排列](https://leetcode-cn.com/problems/next-permutation/) (Medium) - *规律模拟：找降序起点*
+  > 给你一个整数数组 `nums` ，找出 `nums` 的下一个字典序更大的排列。
 
 **区间处理 & 原地哈希**
 - [56. 合并区间](https://leetcode-cn.com/problems/merge-intervals/) (Medium) - *排序后贪心合并*
+  > 以数组 `intervals` 表示若干个区间的集合，合并所有重叠的区间，并返回一个不重叠的区间数组。
 - [41. 缺失的第一个正数](https://leetcode-cn.com/problems/first-missing-positive/) (Hard) - *原地哈希：nums[i]放到i-1位置*
+  > 给你一个未排序的整数数组 `nums` ，请你找出其中没有出现的最小的正整数（要求 $O(n)$ 时间复杂度和 $O(1)$ 空间复杂度）。
 
 ---
 
@@ -110,12 +161,12 @@ for (let i = 1; i < n; i++) {
 return dp[n-1]; // 4. 返回值 (或 Math.max(...dp))
 ```
 
-| 题目                                                                                    | 状态定义                    | 转移方程                                                   |
-| --------------------------------------------------------------------------------------- | --------------------------- | ---------------------------------------------------------- |
-| [70. 爬楼梯](https://leetcode-cn.com/problems/climbing-stairs/)                         | `dp[i]` = 到第i阶的方法数   | `dp[i] = dp[i-1] + dp[i-2]`                                |
-| [53. 最大子数组和](https://leetcode-cn.com/problems/maximum-subarray/)                  | `dp[i]` = 以i结尾的最大和   | `dp[i] = max(dp[i-1] + nums[i], nums[i])`                  |
-| [300. 最长上升子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/) | `dp[i]` = 以i结尾的LIS长度  | `dp[i] = max(dp[j] + 1)` 其中 `j < i && nums[j] < nums[i]` |
-| [139. 单词拆分](https://leetcode-cn.com/problems/word-break/)                           | `dp[i]` = 前i个字符能否拆分 | `dp[i] = dp[j] && s[j:i] in dict`                          |
+| 题目                                                                                    | 题干                                                  | 状态定义                    | 转移方程                                                   |
+| :-------------------------------------------------------------------------------------- | :---------------------------------------------------- | :-------------------------- | :--------------------------------------------------------- |
+| [70. 爬楼梯](https://leetcode-cn.com/problems/climbing-stairs/)                         | 需要 n 阶到达楼顶，每次可爬 1 或 2 阶，求方法数       | `dp[i]` = 到第i阶的方法数   | `dp[i] = dp[i-1] + dp[i-2]`                                |
+| [53. 最大子数组和](https://leetcode-cn.com/problems/maximum-subarray/)                  | 找出具有最大和的 **连续子数组**，返回其最大和         | `dp[i]` = 以i结尾的最大和   | `dp[i] = max(dp[i-1] + nums[i], nums[i])`                  |
+| [300. 最长上升子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/) | 找到其中最长严格递增子序列的长度                      | `dp[i]` = 以i结尾的LIS长度  | `dp[i] = max(dp[j] + 1)` 其中 `j < i && nums[j] < nums[i]` |
+| [139. 单词拆分](https://leetcode-cn.com/problems/word-break/)                           | 判定字符串 `s` 是否可以由 `wordDict` 中的单词拼接而成 | `dp[i]` = 前i个字符能否拆分 | `dp[i] = dp[j] && s[j:i] in dict`                          |
 
 <details>
 <summary><b>代码实现 (点击展开)</b></summary>
@@ -200,9 +251,9 @@ for (let i = 1; i <= amount; i++) {              // 遍历容量
 return dp[amount] > amount ? -1 : dp[amount];    // 4. 返回值
 ```
 
-| 题目                                                           | 状态定义                    | 转移方程                        |
-| -------------------------------------------------------------- | --------------------------- | ------------------------------- |
-| [322. 零钱兑换](https://leetcode-cn.com/problems/coin-change/) | `dp[i]` = 凑成i的最少硬币数 | `dp[i] = min(dp[i - coin] + 1)` |
+| 题目                                                           | 题干                                   | 状态定义                    | 转移方程                        |
+| :------------------------------------------------------------- | :------------------------------------- | :-------------------------- | :------------------------------ |
+| [322. 零钱兑换](https://leetcode-cn.com/problems/coin-change/) | 凑成总金额 `amount` 所需的最少硬币个数 | `dp[i]` = 凑成i的最少硬币数 | `dp[i] = min(dp[i - coin] + 1)` |
 
 <details>
 <summary><b>代码实现 (点击展开)</b></summary>
@@ -249,10 +300,10 @@ for (let i = 1; i <= m; i++) {
 return dp[m][n]; // 4. 答案
 ```
 
-| 题目                                                                                 | 状态定义                | 转移方程                                                    |
-| ------------------------------------------------------------------------------------ | ----------------------- | ----------------------------------------------------------- |
-| [1143. 最长公共子序列](https://leetcode-cn.com/problems/longest-common-subsequence/) | `dp[i][j]` = LCS长度    | 相等：`dp[i-1][j-1]+1`；不等：`max(dp[i-1][j], dp[i][j-1])` |
-| [72. 编辑距离](https://leetcode-cn.com/problems/edit-distance/)                      | `dp[i][j]` = 最少操作数 | 相等：`dp[i-1][j-1]`；不等：`min(三方向) + 1`               |
+| 题目                                                                                 | 题干                                               | 状态定义                | 转移方程                                                    |
+| :----------------------------------------------------------------------------------- | :------------------------------------------------- | :---------------------- | :---------------------------------------------------------- |
+| [1143. 最长公共子序列](https://leetcode-cn.com/problems/longest-common-subsequence/) | 返回两个字符串的最长公共子序列的长度               | `dp[i][j]` = LCS长度    | 相等：`dp[i-1][j-1]+1`；不等：`max(dp[i-1][j], dp[i][j-1])` |
+| [72. 编辑距离](https://leetcode-cn.com/problems/edit-distance/)                      | 计算出将 `word1` 转换成 `word2` 所使用的最少操作数 | `dp[i][j]` = 最少操作数 | 相等：`dp[i-1][j-1]`；不等：`min(三方向) + 1`               |
 
 <details>
 <summary><b>代码实现 (点击展开)</b></summary>
@@ -322,11 +373,11 @@ for (let len = 2; len <= n; len++) {       // 1. 枚举区间长度
 }
 ```
 
-| 题目                                                                               | 状态定义                               | 转移方程                                |
-| ---------------------------------------------------------------------------------- | -------------------------------------- | --------------------------------------- |
-| [64. 最小路径和](https://leetcode-cn.com/problems/minimum-path-sum/)               | `dp[i][j]` = 到(i,j)的最小和           | `dp[i][j] = min(上, 左) + grid[i][j]`   |
-| [221. 最大正方形](https://leetcode-cn.com/problems/maximal-square/)                | `dp[i][j]` = 以(i,j)为右下角的最大边长 | `dp[i][j] = min(左,上,左上) + 1`        |
-| [5. 最长回文子串](https://leetcode-cn.com/problems/longest-palindromic-substring/) | `dp[i][j]` = s[i..j]是否回文           | `dp[i][j] = s[i]==s[j] && dp[i+1][j-1]` |
+| 题目                                                                               | 题干                                            | 状态定义                               | 转移方程                                |
+| :--------------------------------------------------------------------------------- | :---------------------------------------------- | :------------------------------------- | :-------------------------------------- |
+| [64. 最小路径和](https://leetcode-cn.com/problems/minimum-path-sum/)               | 找出从左上角到右下角最小步数的路径和            | `dp[i][j]` = 到(i,j)的最小和           | `dp[i][j] = min(上, 左) + grid[i][j]`   |
+| [221. 最大正方形](https://leetcode-cn.com/problems/maximal-square/)                | 找出矩阵中只包含 '1' 的最大正方形，并返回其面积 | `dp[i][j]` = 以(i,j)为右下角的最大边长 | `dp[i][j] = min(左,上,左上) + 1`        |
+| [5. 最长回文子串](https://leetcode-cn.com/problems/longest-palindromic-substring/) | 找到字符串 `s` 中最长的回文子串                 | `dp[i][j]` = s[i..j]是否回文           | `dp[i][j] = s[i]==s[j] && dp[i+1][j-1]` |
 
 <details>
 <summary><b>代码实现 (点击展开)</b></summary>
@@ -437,14 +488,14 @@ function backtrack(path, choices, start) {
 
 ### 题目速查
 
-| 题目                                                                     | 类型     | 关键技巧                                         |
-| ------------------------------------------------------------------------ | -------- | ------------------------------------------------ |
-| [46. 全排列](https://leetcode-cn.com/problems/permutations/)             | 排列     | `visited` 数组标记已用元素                       |
-| [78. 子集](https://leetcode-cn.com/problems/subsets/)                    | 子集     | 每个节点都收集结果                               |
-| [39. 组合总和](https://leetcode-cn.com/problems/combination-sum/)        | 组合     | 可重复选，下一层从 `i` 开始                      |
-| [93. 复原IP地址](https://leetcode-cn.com/problems/restore-ip-addresses/) | 分割     | 每段 1-3 位，值 ≤ 255，无前导零                  |
-| [22. 括号生成](https://leetcode-cn.com/problems/generate-parentheses/)   | 决策树   | `left < n` 可加左括号，`right < left` 可加右括号 |
-| [79. 单词搜索](https://leetcode-cn.com/problems/word-search/)            | 网格回溯 | 四方向 DFS + 原地标记访问                        |
+| 题目                                                                     | 题干                                                       | 类型     | 关键技巧                                         |
+| :----------------------------------------------------------------------- | :--------------------------------------------------------- | :------- | :----------------------------------------------- |
+| [46. 全排列](https://leetcode-cn.com/problems/permutations/)             | 给定一个不含重复数字的数组，返回其所有可能的全排列         | 排列     | `visited` 数组标记已用元素                       |
+| [78. 子集](https://leetcode-cn.com/problems/subsets/)                    | 数组中元素互不相同，返回该数组所有可能的子集               | 子集     | 每个节点都收集结果                               |
+| [39. 组合总和](https://leetcode-cn.com/problems/combination-sum/)        | 找出无重复元素数组中能凑成 `target` 的所有组合（可重复选） | 组合     | 可重复选，下一层从 `i` 开始                      |
+| [93. 复原IP地址](https://leetcode-cn.com/problems/restore-ip-addresses/) | 给定只包含数字的字符串，复原出所有可能的有效 IP 地址       | 分割     | 每段 1-3 位，值 ≤ 255，无前导零                  |
+| [22. 括号生成](https://leetcode-cn.com/problems/generate-parentheses/)   | 生成所有可能的并且有效的括号组合                           | 决策树   | `left < n` 可加左括号，`right < left` 可加右括号 |
+| [79. 单词搜索](https://leetcode-cn.com/problems/word-search/)            | 在网格中搜索是否存在给定的字符串单词                       | 网格回溯 | 四方向 DFS + 原地标记访问                        |
 
 <details>
 <summary><b>代码实现 (点击展开)</b></summary>
@@ -628,20 +679,24 @@ function bfs(grid, startI, startJ) {
 
 ### 题目速查
 
-| 题目                                                                            | 算法    | 关键技巧                         |
-| ------------------------------------------------------------------------------- | ------- | -------------------------------- |
-| [200. 岛屿数量](https://leetcode-cn.com/problems/number-of-islands/)            | DFS/BFS | 遇到 `'1'` 启动搜索，沉没整个岛  |
-| [695. 岛屿的最大面积](https://leetcode-cn.com/problems/max-area-of-island/)     | DFS     | 返回递归面积，取最大值           |
-| [240. 搜索二维矩阵 II](https://leetcode-cn.com/problems/search-a-2d-matrix-ii/) | 双指针  | 从右上角开始，大了往左，小了往下 |
+| 题目                                                                            | 题干                                                 | 算法    | 关键技巧                         |
+| :------------------------------------------------------------------------------ | :--------------------------------------------------- | :------ | :------------------------------- |
+| [200. 岛屿数量](https://leetcode-cn.com/problems/number-of-islands/)            | 计算由 '1'（陆地）和 '0'（水）组成的网格中岛屿的数量 | DFS/BFS | 遇到 `'1'` 启动搜索，沉没整个岛  |
+| [695. 岛屿的最大面积](https://leetcode-cn.com/problems/max-area-of-island/)     | 计算并返回网格中岛屿的最大面积                       | DFS     | 返回递归面积，取最大值           |
+| [240. 搜索二维矩阵 II](https://leetcode-cn.com/problems/search-a-2d-matrix-ii/) | 在行和列都升序排列的矩阵中搜索目标值                 | 双指针  | 从右上角开始，大了往左，小了往下 |
 
 ---
 
 ## 七、 二分查找 (Binary Search)
 
 - [33. 搜索旋转排序数组](https://leetcode-cn.com/problems/search-in-rotated-sorted-array/) (Medium)
+  > 给你旋转后的数组 `nums` 和一个整数 `target` ，如果 `nums` 中存在这个目标值 ，则返回它的下标。
 - [69. x 的平方根](https://leetcode-cn.com/problems/sqrtx/) (Easy)
+  > 给你一个非负整数 `x` ，计算并返回 `x` 的算术平方根。结果只保留整数部分。
 - [162. 寻找峰值](https://leetcode-cn.com/problems/find-peak-element/) (Medium)
+  > 给你一个整数数组 `nums`，找到峰值元素并返回其索引。峰值元素是指其值大于左右相邻值的元素。
 - [4. 寻找两个正序数组的中位数](https://leetcode-cn.com/problems/median-of-two-sorted-arrays/) (Hard)
+  > 给定两个大小分别为 `m` 和 `n` 的正序数组 `nums1` 和 `nums2`。请你找出这两个正序数组的中位数。
 
 ### 核心模板（推荐使用）
 
@@ -802,12 +857,12 @@ var findMedianSortedArrays = function(nums1, nums2) {
 
 ### 总结对比
 
-| 题目 | 难点 | 二分条件 |
-|------|------|----------|
-| 33. 旋转数组 | 判断有序半边 | `nums[left] < nums[mid]` |
-| 69. 平方根 | 边界处理 | `mid * mid` 与 x 比较 |
-| 162. 峰值 | 方向选择 | `nums[mid] > nums[mid+1]` |
-| 4. 中位数 | 双数组分割 | 分割点满足交叉条件 |
+| 题目         | 题干                           | 难点         | 二分条件                  |
+| :----------- | :----------------------------- | :----------- | :------------------------ |
+| 33. 旋转数组 | 在旋转后的升序数组中搜索目标值 | 判断有序半边 | `nums[left] < nums[mid]`  |
+| 69. 平方根   | 计算非负整数 x 的算术平方根    | 边界处理     | `mid * mid` 与 x 比较     |
+| 162. 峰值    | 在数组中寻找任意一个峰值索引   | 方向选择     | `nums[mid] > nums[mid+1]` |
+| 4. 中位数    | 找两个正序数组的中位数         | 双数组分割   | 分割点满足交叉条件        |
 
 ---
 
@@ -815,21 +870,26 @@ var findMedianSortedArrays = function(nums1, nums2) {
 
 **栈**
 - [20. 有效的括号](https://leetcode-cn.com/problems/valid-parentheses/) (Easy)
+  > 给定一个只包括括号的字符串，判断字符串是否有效（左括号必须以正确顺序闭合）。
 - [32. 最长有效括号](https://leetcode-cn.com/problems/longest-valid-parentheses/) (Hard)
+  > 给你一个只包含 '(' 和 ')' 的字符串，找出最长有效（格式正确且连续）括号子串的长度。
 - [155. 最小栈](https://leetcode-cn.com/problems/min-stack/) (Easy)
+  > 设计一个支持 `push`, `pop`, `top` 操作，并能在常数时间内检索到最小元素的栈。
 - [232. 用栈实现队列](https://leetcode-cn.com/problems/implement-queue-using-stacks/) (Easy)
+  > 请你仅使用两个栈实现先入先出队列。
 - [394. 字符串解码](https://leetcode-cn.com/problems/decode-string/) (Medium)
+  > 给定一个经过编码的字符串（如 `3[a]2[bc]`），返回它解码后的字符串（`aaabcbc`）。
 
 ### 栈的通用思路
 
 栈题目没有固定模板，但有通用思路：
 
-| 场景 | 思路 | 栈中存储 |
-|------|------|----------|
-| 匹配问题 | 遇"左"入栈，遇"右"出栈匹配 | 字符 |
-| 计算区间长度 | 存索引而非值 | 索引 |
-| 维护额外信息 | 辅助栈同步维护 | 值 + 辅助信息 |
-| 逆序处理 | 双栈倒腾 | 分离存储 |
+| 场景         | 思路                       | 栈中存储      |
+| ------------ | -------------------------- | ------------- |
+| 匹配问题     | 遇"左"入栈，遇"右"出栈匹配 | 字符          |
+| 计算区间长度 | 存索引而非值               | 索引          |
+| 维护额外信息 | 辅助栈同步维护             | 值 + 辅助信息 |
+| 逆序处理     | 双栈倒腾                   | 分离存储      |
 
 ### 20. 有效的括号 (Easy)
 
@@ -977,7 +1037,9 @@ var decodeString = function(s) {
 
 **排序**
 - [215. 数组中的第K个最大元素](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/) (Medium) - *快速选择*
+  > 给定整数数组 `nums` 和整数 `k`，请返回数组中第 `k` 个最大的元素。
 - [补充题4. 手撕快速排序](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/)
+  > 给定一个数组，实现快速排序算法。
 
 ### 快速排序模板
 
@@ -1071,16 +1133,21 @@ function partition(nums, left, right) {
 
 ### 排序算法对比
 
-| 算法 | 时间复杂度 | 空间复杂度 | 稳定性 | 适用场景 |
-|------|-----------|-----------|--------|----------|
-| 快速排序 | O(nlogn) 平均 | O(logn) | 不稳定 | 通用排序 |
-| 快速选择 | O(n) 平均 | O(1) | - | 找第K大/小 |
-| 堆排序 | O(nlogn) | O(1) | 不稳定 | TopK问题 |
-| 归并排序 | O(nlogn) | O(n) | 稳定 | 链表排序、求逆序对 |
+| 算法     | 时间复杂度    | 空间复杂度 | 稳定性 | 适用场景           |
+| -------- | ------------- | ---------- | ------ | ------------------ |
+| 快速排序 | O(nlogn) 平均 | O(logn)    | 不稳定 | 通用排序           |
+| 快速选择 | O(n) 平均     | O(1)       | -      | 找第K大/小         |
+| 堆排序   | O(nlogn)      | O(1)       | 不稳定 | TopK问题           |
+| 归并排序 | O(nlogn)      | O(n)       | 稳定   | 链表排序、求逆序对 |
 
 **字符串/数学**
 - [415. 字符串相加](https://leetcode-cn.com/problems/add-strings/) (Easy)
+  > 给定两个字符串形式的非负整数 `num1` 和 `num2` ，计算它们的和并输出。
 - [43. 字符串相乘](https://leetcode-cn.com/problems/multiply-strings/) (Medium)
+  > 给定两个以字符串形式表示的非负整数 `num1` 和 `num2`，返回 `num1` 和 `num2` 的乘积。
 - [165. 比较版本号](https://leetcode-cn.com/problems/compare-version-numbers/) (Medium)
+  > 如果 `version1 > version2` 返回 1，反之返回 -1，相等返回 0（处理如 `1.0.1` 和 `1` 的比较）。
 - [470. 用 Rand7() 实现 Rand10()](https://leetcode-cn.com/problems/implement-rand10-using-rand7/) (Medium)
+  > 已有方法 `rand7` 可生成 1 到 7 范围内的均匀随机整数，请实现 `rand10`。
 - [440. 字典序的第K小数字](https://leetcode-cn.com/problems/k-th-smallest-in-lexicographical-order/) (Hard)
+  > 给你两个整数 `n` 和 `k` ，找到 1 到 `n` 字典序第 `k` 小的整数。
