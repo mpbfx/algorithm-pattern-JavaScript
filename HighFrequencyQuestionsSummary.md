@@ -124,6 +124,55 @@
 - [122. 买卖股票的最佳时机 II](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/) (Medium) - *累加所有正收益*
   > 给你一个整数数组 `prices` ，其中 `prices[i]` 表示某支股票第 `i` 天的价格。在每一天，你可以决定是否购买和/或出售股票。计算你所能获得的最大利润。
 
+### 贪心策略模板 (股票问题)
+
+> **核心思想**：
+> 1. **单次交易 (121)**：贪心地假设自己是在历史最低点买入的。遍历时持续更新“历史最低价 (`minPrice`)”，并计算“当前价格卖出能赚多少 (`price - minPrice`)”，取最大值。
+> 2. **无限次交易 (122)**：贪心地收集所有“上坡”的收益。只要今天的价格比昨天高，我就假装昨天买今天卖（`prices[i] - prices[i-1]`），把所有正收益累加起来就是最大利润。
+
+<details>
+<summary><b>代码实现 (点击展开)</b></summary>
+
+```javascript
+// 121. 买卖股票的最佳时机 (只允许一次交易)
+var maxProfit = function(prices) {
+    let profit = 0;
+    
+    // 方法：我们假设第 0 天买入，然后找之后价格更高的卖出
+    // 实际操作：维护一个 minPrice 成本线
+    let minPrice = prices[0];
+    
+    for (let i = 1; i < prices.length; i++) { // 从第 1 天开始看
+        if (prices[i] > minPrice) {
+            // 如果今天比成本线高，尝试卖出，看是不是能赚更多
+            profit = Math.max(profit, prices[i] - minPrice);
+        } else {
+            // 如果今天比成本线还低，那不如今天买入（更新成本线）
+            minPrice = prices[i];
+        }
+    }
+    return profit;
+};
+
+// 122. 买卖股票的最佳时机 II (允许无限次交易)
+var maxProfitII = function(prices) {
+    let profit = 0;
+    
+    // 方法：我们只看从昨天到今天这一段，能不能赚钱
+    // 实际操作：比较今天和昨天的价格
+    
+    for (let i = 1; i < prices.length; i++) { // 从第 1 天开始看
+        if (prices[i] > prices[i - 1]) {
+            // 如果今天比昨天高，就赚这个差价（收集上坡）
+            profit += prices[i] - prices[i - 1];
+        }
+        // 如果比昨天低，就不动（不把亏损算进去），也无需更新 minPrice，因为我们可以每天都操作
+    }
+    return profit;
+};
+```
+</details>
+
 **矩阵模拟 (边界控制)**
 - [54. 螺旋矩阵](https://leetcode-cn.com/problems/spiral-matrix/) (Medium) - *四边界收缩*
   > 给你一个 `m` 行 `n` 列的矩阵 `matrix` ，请按照顺时针螺旋顺序，返回矩阵中的所有元素。
@@ -131,6 +180,106 @@
   > 给定一个 $n \times n$ 的二维矩阵 `matrix` 表示一个图像。请你将图像顺时针旋转 90 度（原地旋转）。
 - [31. 下一个排列](https://leetcode-cn.com/problems/next-permutation/) (Medium) - *规律模拟：找降序起点*
   > 给你一个整数数组 `nums` ，找出 `nums` 的下一个字典序更大的排列。
+
+### 模拟/数学策略模板
+
+> **核心思想**：
+> 1. **矩阵操作**：通常不需要复杂算法，而是需要**精确控制边界 (Top/Bottom/Left/Right)** 或者利用**几何数学变换 (转置+镜像)**。
+> 2. **排列问题**：观察数字规律。涉及顺序变换时，往往从**倒序遍历**找那个“破坏单调性”的点开始。
+
+<details>
+<summary><b>代码实现 (点击展开)</b></summary>
+
+```javascript
+// 54. 螺旋矩阵 (四边界收缩法)
+var spiralOrder = function(matrix) {
+    if (!matrix.length) return [];
+    
+    // 1. 定义四个边界
+    let top = 0, bottom = matrix.length - 1;
+    let left = 0, right = matrix[0].length - 1;
+    const res = [];
+    
+    // 2. 循环直到边界交错
+    while (true) {
+        // 向右移动 (top行)
+        for (let i = left; i <= right; i++) res.push(matrix[top][i]);
+        if (++top > bottom) break; // 上边界下移，检查是否越界
+
+        // 向下移动 (right列)
+        for (let i = top; i <= bottom; i++) res.push(matrix[i][right]);
+        if (--right < left) break; // 右边界左移
+
+        // 向左移动 (bottom行)
+        for (let i = right; i >= left; i--) res.push(matrix[bottom][i]);
+        if (--bottom < top) break; // 下边界上移
+
+        // 向上移动 (left列)
+        for (let i = bottom; i >= top; i--) res.push(matrix[i][left]);
+        if (++left > right) break; // 左边界右移
+    }
+    
+    return res;
+};
+
+// 48. 旋转图像 (数学变换法)
+// 顺时针转90度 = 先水平上下翻转 + 再对角线翻转 (写法很多，这种最好记)
+// 或者：先对角线转置 + 再左右翻转
+var rotate = function(matrix) {
+    const n = matrix.length;
+    
+    // 1. 先水平上下翻转 (Top <-> Bottom)
+    // 1 2 3      7 8 9
+    // 4 5 6  =>  4 5 6
+    // 7 8 9      1 2 3
+    let top = 0, bottom = n - 1;
+    while (top < bottom) {
+        [matrix[top], matrix[bottom]] = [matrix[bottom], matrix[top]];
+        top++;
+        bottom--;
+    }
+    
+    // 2. 再对角线翻转 (Swap matrix[i][j] with matrix[j][i])
+    // 7 8 9      7 4 1
+    // 4 5 6  =>  8 5 2
+    // 1 2 3      9 6 3
+    for (let i = 0; i < n; i++) {
+        for (let j = i + 1; j < n; j++) { // 注意 j 从 i+1 开始，只遍历上三角
+            [matrix[i][j], matrix[j][i]] = [matrix[j][i], matrix[i][j]];
+        }
+    }
+};
+
+// 31. 下一个排列 (三步走)
+var nextPermutation = function(nums) {
+    let i = nums.length - 2;
+    // 1. 从后向前找第一个【升序对】 (i, i+1)，即 nums[i] < nums[i+1]
+    //    此时 [i+1, end] 肯定是降序的
+    while (i >= 0 && nums[i] >= nums[i + 1]) {
+        i--;
+    }
+    
+    if (i >= 0) {
+        // 2. 从后向前找第一个比 nums[i] 大的数 nums[j]
+        let j = nums.length - 1;
+        while (j >= 0 && nums[j] <= nums[i]) {
+            j--;
+        }
+        // 交换它们，让大一点点的数排到前面
+        [nums[i], nums[j]] = [nums[j], nums[i]];
+    }
+    
+    // 3. 将 [i+1, end] 这部分降序的数组反转成升序，使其变小
+    let left = i + 1;
+    let right = nums.length - 1;
+    while (left < right) {
+        [nums[left], nums[right]] = [nums[right], nums[left]];
+        left++;
+        right--;
+    }
+};
+```
+</details>
 
 **区间处理 & 原地哈希**
 - [56. 合并区间](https://leetcode-cn.com/problems/merge-intervals/) (Medium) - *排序后贪心合并*
@@ -685,6 +834,89 @@ function bfs(grid, startI, startJ) {
 | [695. 岛屿的最大面积](https://leetcode-cn.com/problems/max-area-of-island/)     | 计算并返回网格中岛屿的最大面积                       | DFS     | 返回递归面积，取最大值           |
 | [240. 搜索二维矩阵 II](https://leetcode-cn.com/problems/search-a-2d-matrix-ii/) | 在行和列都升序排列的矩阵中搜索目标值                 | 双指针  | 从右上角开始，大了往左，小了往下 |
 
+<details>
+<summary><b>代码实现 (点击展开)</b></summary>
+
+```javascript
+// 200. 岛屿数量 (套用 DFS 模板)
+var numIslands = function(grid) {
+    if (!grid || grid.length === 0) return 0;
+    const m = grid.length, n = grid[0].length;
+    let count = 0;
+    
+    const dfs = (i, j) => {
+        // 边界检查 & 检查是否为陆地
+        if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] === '0') return;
+        
+        grid[i][j] = '0'; // 沉没当前陆地
+        
+        // 四方向遍历
+        dfs(i + 1, j);
+        dfs(i - 1, j);
+        dfs(i, j + 1);
+        dfs(i, j - 1);
+    };
+    
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            if (grid[i][j] === '1') {
+                count++;      // 发现新岛屿
+                dfs(i, j);    // 启动 DFS 将该岛屿彻底沉没
+            }
+        }
+    }
+    return count;
+};
+
+// 695. 岛屿的最大面积 (套用 DFS 模板 - 带返回值)
+var maxAreaOfIsland = function(grid) {
+    const m = grid.length, n = grid[0].length;
+    let maxArea = 0;
+    
+    const dfs = (i, j) => {
+        // 边界检查 & 检查是否为陆地
+        if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] !== 1) return 0;
+        
+        grid[i][j] = 0; // 标记已访问 (修改为0)
+        
+        // 当前面积(1) + 四周的面积
+        return 1 + dfs(i + 1, j) + dfs(i - 1, j) + dfs(i, j + 1) + dfs(i, j - 1);
+    };
+    
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            if (grid[i][j] === 1) {
+                // 更新最大面积
+                maxArea = Math.max(maxArea, dfs(i, j));
+            }
+        }
+    }
+    return maxArea;
+};
+
+// 240. 搜索二维矩阵 II (类二分查找 / 聪明双指针)
+// 虽然放在搜索章节，但这题用双指针更优：从右上角出发
+var searchMatrix = function(matrix, target) {
+    if (!matrix.length) return false;
+    const m = matrix.length, n = matrix[0].length;
+    
+    // 从右上角开始 (row = 0, col = n - 1)
+    let row = 0, col = n - 1;
+    
+    while (row < m && col >= 0) {
+        const curr = matrix[row][col];
+        if (curr === target) {
+            return true;
+        } else if (curr > target) {
+            col--; // 当前值太大，往左移变小
+        } else {
+            row++; // 当前值太小，往下移变大
+        }
+    }
+    return false;
+};
+```
+</details>
 ---
 
 ## 七、 二分查找 (Binary Search)
@@ -1151,3 +1383,157 @@ function partition(nums, left, right) {
   > 已有方法 `rand7` 可生成 1 到 7 范围内的均匀随机整数，请实现 `rand10`。
 - [440. 字典序的第K小数字](https://leetcode-cn.com/problems/k-th-smallest-in-lexicographical-order/) (Hard)
   > 给你两个整数 `n` 和 `k` ，找到 1 到 `n` 字典序第 `k` 小的整数。
+
+### 模板一：大数运算 (模拟竖式)
+
+> **核心思想**：从字符串末尾（最低位）开始逐位操作，维护 `carry` 进位。对于乘法，`num1[i] * num2[j]` 的结果会叠加到 `res[i+j]` 和 `res[i+j+1]` 位置。
+
+#### 415. 字符串相加 (Easy)
+
+```javascript
+/* 
+ * 模板：双指针倒序遍历 + Carry处理
+ */
+var addStrings = function(num1, num2) {
+    let i = num1.length - 1, j = num2.length - 1, carry = 0;
+    const res = [];
+    while (i >= 0 || j >= 0 || carry !== 0) {
+        // 如果指针越界，视为 0
+        const x = i >= 0 ? num1.charAt(i--) - '0' : 0;
+        const y = j >= 0 ? num2.charAt(j--) - '0' : 0;
+        const sum = x + y + carry;
+        res.push(sum % 10);
+        carry = Math.floor(sum / 10);
+    }
+    return res.reverse().join('');
+};
+```
+
+#### 43. 字符串相乘 (Medium)
+
+```javascript
+/*
+ * 模板：乘积位置规律
+ * num1[i] * num2[j] 会影响 res[i + j] 和 res[i + j + 1]
+ */
+var multiply = function(num1, num2) {
+    if (num1 === '0' || num2 === '0') return '0';
+    const m = num1.length, n = num2.length;
+    const res = new Array(m + n).fill(0);
+    
+    // 从个位开始相乘
+    for (let i = m - 1; i >= 0; i--) {
+        for (let j = n - 1; j >= 0; j--) {
+            const mul = (num1[i] - '0') * (num2[j] - '0');
+            const p1 = i + j;     // 进位位置
+            const p2 = i + j + 1; // 当前位位置
+            
+            const sum = mul + res[p2];
+            
+            res[p2] = sum % 10;
+            res[p1] += Math.floor(sum / 10); // 进位累加到 p1
+        }
+    }
+    
+    // 去除前导零 (如 9*9=81，res长度为2，0位置非0；但有些情况可能有多余前导0)
+    while (res[0] === 0) res.shift();
+    return res.join('');
+};
+```
+
+### 模板二：双指针分块解析
+
+> **核心思想**：处理 "分块" 字符串（如 IP 地址、版本号）。使用 `while` 循环解析当前块的数值，遇到分隔符停下，比较后跳过分隔符继续。
+
+#### 165. 比较版本号 (Medium)
+
+```javascript
+var compareVersion = function(version1, version2) {
+    let p1 = 0, p2 = 0;
+    const n1 = version1.length, n2 = version2.length;
+    
+    while (p1 < n1 || p2 < n2) {
+        let num1 = 0, num2 = 0;
+        // 解析 v1 的当前块
+        while (p1 < n1 && version1[p1] !== '.') {
+            num1 = num1 * 10 + (version1[p1++] - '0');
+        }
+        // 解析 v2 的当前块
+        while (p2 < n2 && version2[p2] !== '.') {
+            num2 = num2 * 10 + (version2[p2++] - '0');
+        }
+        
+        if (num1 > num2) return 1;
+        if (num1 < num2) return -1;
+        
+        // 跳过点，进入下一块
+        p1++; p2++;
+    }
+    return 0;
+};
+```
+
+### 模板三：拒绝采样 (概率)
+
+> **通用公式**：`(randX() - 1) * Y + randY()` 可以生成 `1` 到 `X*Y` 的均匀随机整数。
+> **核心思想**：生成一个比目标范围大的均匀分布，如果生成的数落在目标范围内则返回，否则拒绝并重试。
+
+#### 470. 用 Rand7() 实现 Rand10() (Medium)
+
+```javascript
+var rand10 = function() {
+    while (true) {
+        // (rand7() - 1) * 7 + rand7() -> 生成 1 到 49 的均匀整数
+        const num = (rand7() - 1) * 7 + rand7();
+        
+        // 只要 1-40 的数 (40是10的倍数，可以均匀映射)
+        if (num <= 40) {
+            return (num - 1) % 10 + 1;
+        }
+        // 大于 40 的数拒绝，进入下一轮循环
+    }
+};
+```
+
+### 模板四：字典序计数 (十叉树)
+
+> **核心思想**：将 `1` 到 `n` 的数字看作一棵 **十叉树**（前序遍历即字典序）。
+> 为了找到第 `K` 小，我们需要决定是 **"向右走"** (跨过当前子树) 还是 **"向下走"** (进入子树)。
+> - 计算 `curr` 下面的子节点数 `steps`。
+> - 若 `steps <= k`：说明目标不在这个子树，`curr++` (向右)，`k -= steps`。
+> - 若 `steps > k`：说明目标在这个子树内，`curr *= 10` (向下)，`k--` (减去根节点)。
+
+#### 440. 字典序的第K小数字 (Hard)
+
+```javascript
+var findKthNumber = function(n, k) {
+    let curr = 1;
+    k--; // k 指还需要跳过的节点数（扣除起点 1）
+    
+    while (k > 0) {
+        const steps = getSteps(curr, n);
+        if (steps <= k) {
+            curr++;       // 向右走：去兄弟节点
+            k -= steps;   // 减去整个子树的节点数
+        } else {
+            curr *= 10;   // 向下走：去第一个子节点
+            k--;          // 减去当前根节点这 1 个计数
+        }
+    }
+    return curr;
+};
+
+// 计算以 curr 为根的子树节点数（不大于 n）
+function getSteps(curr, n) {
+    let steps = 0;
+    let first = curr;
+    let last = curr;
+    while (first <= n) {
+        // 当前层有多少个节点：min(last, n) - first + 1
+        steps += Math.min(last, n) - first + 1;
+        first *= 10;
+        last = last * 10 + 9;
+    }
+    return steps;
+}
+```
