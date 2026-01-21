@@ -438,3 +438,136 @@ const intersaction1 = (headA, headB) => {
 
     return pA;
 }
+
+const resort = (head) => {
+    let slow = head;
+    let fast = head;
+    while(fast && fast.next){
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    let cur = slow.next;
+    slow.next = null;
+    let pre = null;
+    while(cur !== null){
+        let next = cur.next;
+        cur.next = pre;
+        pre = cur;
+        cur = next;
+    }
+
+    let head1 = head;
+    let head2 = pre;
+    while(head1 && head2){
+        let next1 = head1.next;
+        let next2 = head2.next;
+        head1.next = head2;
+        head1 = next1;
+        head2.next = next1;
+        head2 = next2;
+    }
+}
+
+const resortList = head => {
+    let slow = head;
+    let fast = head;
+    while(fast && fast.next){
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    let pre = null;
+    let cur = slow.next;
+    slow.next = null;
+
+    while(cur !== null){
+        let next = cur.next;
+        cur.next = pre;
+        pre = cur;
+        cur = next;
+    }
+
+    let l1 = head;
+    let l2 = pre;
+    while(l1 && l2){
+        let next1 = l1.next;
+        let next2 = l2.next;
+        l1.next = l2;
+        l1 = next1;
+        l2.next = next1;
+        l2 = next2;
+    }
+}
+
+const LRUCache = function(capacity){
+    this.capacity = capacity;
+    this.map = new Map();
+    this.head = new ListNode(-1, -1);
+    this.tail = new ListNode(-1, -1);
+    this.head.next = this.tail;
+    this.tail.pre = this.head;
+}
+
+function ListNode(key, val){
+    this.key = key;
+    this.val = val;
+    this.pre = null;
+    this.next = null;
+}
+
+LRUCache.prototype.get = function(key){
+    if(!this.map.has(key)) return -1;
+    const node = this.map.get(key);
+    this.moveToHead(node);
+    return node;
+}
+
+LRUCache.prototype.put = function(key, value){
+    if(this.map.has(key)){
+        const node = this.map.get(key);
+        node.val = value;
+        this.moveToHead(node);
+    }else{
+        if(this.capacity === this.map.size){
+            const lastNode = this.tail.prev;
+            this.removeNode(lastNode);
+            this.map.delete(lastNode.key);
+        }
+        const node = new ListNode(key, value);
+        this.addNodeToHead(node);
+        this.map.set(key, value);
+    }
+}
+
+LRUCache.prototype.moveToHead = function(node){
+    this.removeNode(node);
+    this.addNodeToHead(node);
+}
+
+LRUCache.prototype.removeNode = function(node){
+    node.pre.next = node.next;
+    node.next.pre = node.pre;
+}
+
+LRUCache.prototype.addNodeTohead = function(node){
+    node.next = this.head.next;
+    node.pre = this.head;
+    this.head.next = node;
+    this.next.pre = node;
+}
+
+const deleteDuplicates = (head) => {
+    let dummy = new ListNode(-1);
+    dummy.next = head;
+    let pre = dummy;
+    while(pre.next !== null && pre.next.next !== null){
+        if(pre.next.val === pre.next.next.val){
+            let val = pre.next.val;
+            while(pre.next !== null && val === pre.next.val){
+                pre.next = pre.next.next;
+            }
+        }else{
+            pre = pre.next;
+        }
+    }
+    return dummy.next;
+}
